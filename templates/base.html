@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Физика: Скорость и ускорение{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <a href="{{ url_for('index') }}" class="brand">⚡ Физика: Скорость и ускорение</a>
+            <nav class="nav">
+                <a href="{{ url_for('index') }}" class="{% if request.path == '/' %}active{% endif %}">Главная</a>
+                <a href="{{ url_for('problems_page') }}" class="{% if request.path == '/problems' %}active{% endif %}">Задачи</a>
+                <a href="{{ url_for('solve_page') }}" class="{% if request.path == '/solve' %}active{% endif %}">Решатель</a>
+                <a href="{{ url_for('formulas_page') }}" class="{% if request.path == '/formulas' %}active{% endif %}">Формулы</a>
+                <a href="{{ url_for('quiz_page') }}" class="{% if request.path == '/quiz' %}active{% endif %}">Тест</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>Интерактивное веб-приложение для изучения кинематики.</p>
+        </div>
+    </footer>
+</body>
+</html>

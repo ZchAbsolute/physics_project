@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Справочник формул — Физика{% endblock %}
+
+{% block content %}
+<h1 class="page-title">📐 Справочник формул</h1>
+<p class="lead">Основные формулы темы «Скорость и ускорение».</p>
+
+<div class="formula-sections">
+    {% for section, items in formulas.items() %}
+    <section class="formula-section">
+        <h2>{{ section }}</h2>
+        <table class="formula-table">
+            <thead>
+                <tr>
+                    <th>Формула</th>
+                    <th>Что вычисляет</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for formula, name in items %}
+                <tr>
+                    <td class="formula"><code>{{ formula }}</code></td>
+                    <td>{{ name }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+    {% endfor %}
+</div>
+
+<div class="note">
+    💡 Ускорение свободного падения на Земле: <strong>g = {{ g }} м/с²</strong>.
+    Переход от км/ч к м/с: разделите скорость на 3.6.
+</div>
+{% endblock %}

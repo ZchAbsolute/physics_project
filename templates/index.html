@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Главная — Физика: Скорость и ускорение{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <h1>Решение задач по физике</h1>
+    <p class="subtitle">Тема: <strong>равномерное и равноускоренное движение</strong></p>
+    <p>
+        Интерактивное веб-приложение для решения, изучения и проверки знаний
+        по кинематике. Выберите нужный раздел ниже.
+    </p>
+</section>
+
+<section class="cards">
+    <div class="card">
+        <div class="card-icon">📚</div>
+        <h2>Банк задач</h2>
+        <p>Готовые задачи с подробными пошаговыми решениями по разным типам движения.</p>
+        <a href="{{ url_for('problems_page') }}" class="btn">Перейти</a>
+    </div>
+
+    <div class="card">
+        <div class="card-icon">🧮</div>
+        <h2>Решатель</h2>
+        <p>Введите известные величины — программа вычислит искомые параметры движения.</p>
+        <a href="{{ url_for('solve_page') }}" class="btn">Перейти</a>
+    </div>
+
+    <div class="card">
+        <div class="card-icon">📐</div>
+        <h2>Справочник формул</h2>
+        <p>Все основные формулы темы «Скорость и ускорение» в одном месте.</p>
+        <a href="{{ url_for('formulas_page') }}" class="btn">Перейти</a>
+    </div>
+
+    <div class="card">
+        <div class="card-icon">✏️</div>
+        <h2>Тест</h2>
+        <p>Проверьте свои знания с помощью викторины с автоматической проверкой.</p>
+        <a href="{{ url_for('quiz_page') }}" class="btn">Перейти</a>
+    </div>
+</section>
+{% endblock %}

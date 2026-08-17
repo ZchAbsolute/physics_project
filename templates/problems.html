@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Банк задач — Физика{% endblock %}
+
+{% block content %}
+<h1 class="page-title">📚 Банк задач</h1>
+<p class="lead">Готовые задачи с подробными решениями по теме «Скорость и ускорение».</p>
+
+{% for problem in problems %}
+<details class="problem" open>
+    <summary>
+        <span class="badge badge-{{ 'uniform' if problem.category == 'Равномерное движение' else ('accel' if problem.category == 'Равноускоренное движение' else 'fall') }}">{{ problem.category }}</span>
+        {{ problem.question }}
+    </summary>
+    <div class="solution">
+        <h3>Решение</h3>
+        <p class="solution-text">{{ problem.solution }}</p>
+        <p class="answer"><strong>Ответ:</strong> {{ problem.answer }}</p>
+    </div>
+</details>
+{% endfor %}
+{% endblock %}

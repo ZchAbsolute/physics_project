@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block title %}Решатель задач — Физика{% endblock %}
+
+{% block content %}
+<h1 class="page-title">🧮 Решение своей задачи</h1>
+<p class="lead">
+    Выберите тип движения, заполните известные величины, оставив неизвестные пустыми.
+    Программа вычислит недостающие параметры.
+</p>
+
+<form method="post" class="solve-form">
+    <div class="mode-selector">
+        <label class="mode-option">
+            <input type="radio" name="mode" value="uniform"
+                   {% if form.mode == 'uniform' %}checked{% endif %} onchange="this.form.submit()">
+            <span>Равномерное движение</span>
+        </label>
+        <label class="mode-option">
+            <input type="radio" name="mode" value="accelerated"
+                   {% if form.mode == 'accelerated' %}checked{% endif %} onchange="this.form.submit()">
+            <span>Равноускоренное движение</span>
+        </label>
+        <label class="mode-option">
+            <input type="radio" name="mode" value="fall"
+                   {% if form.mode == 'fall' %}checked{% endif %} onchange="this.form.submit()">
+            <span>Свободное падение</span>
+        </label>
+    </div>
+
+    {% if form.mode == 'uniform' %}
+    <p class="formula-hint">Формула: <code>v = s / t</code> — заполните ровно 2 поля.</p>
+    <div class="fields">
+        <div class="field">
+            <label for="v">Скорость v (м/с)</label>
+            <input type="text" id="v" name="v" value="{{ form.v }}" placeholder="неизвестна — пусто">
+        </div>
+        <div class="field">
+            <label for="s">Путь s (м)</label>
+            <input type="text" id="s" name="s" value="{{ form.s }}" placeholder="неизвестен — пусто">
+        </div>
+        <div class="field">
+            <label for="t">Время t (с)</label>
+            <input type="text" id="t" name="t" value="{{ form.t }}" placeholder="неизвестно — пусто">
+        </div>
+    </div>
+
+    {% elif form.mode == 'accelerated' %}
+    <p class="formula-hint">Формулы: <code>v = v₀ + a*t</code>, <code>s = v₀*t + (a*t²)/2</code> — заполните минимум 3 поля.</p>
+    <div class="fields">
+        <div class="field">
+            <label for="v">Конечная скорость v (м/с)</label>
+            <input type="text" id="v" name="v" value="{{ form.v }}" placeholder="неизвестна — пусто">
+        </div>
+        <div class="field">
+            <label for="v0">Начальная скорость v₀ (м/с)</label>
+            <input type="text" id="v0" name="v0" value="{{ form.v0 }}" placeholder="неизвестна — пусто">
+        </div>
+        <div class="field">
+            <label for="t">Время t (с)</label>
+            <input type="text" id="t" name="t" value="{{ form.t }}" placeholder="неизвестно — пусто">
+        </div>
+        <div class="field">
+            <label for="a">Ускорение a (м/с²)</label>
+            <input type="text" id="a" name="a" value="{{ form.a }}" placeholder="неизвестно — пусто">
+        </div>
+        <div class="field">
+            <label for="s">Путь s (м)</label>
+            <input type="text" id="s" name="s" value="{{ form.s }}" placeholder="неизвестен — пусто">
+        </div>
+    </div>
+
+    {% elif form.mode == 'fall' %}
+    <p class="formula-hint">Формулы: <code>v = g*t</code>, <code>h = (g*t²)/2</code>, где g = {{ g }} м/с² — заполните ровно 1 поле.</p>
+    <div class="fields">
+        <div class="field">
+            <label for="v">Скорость v (м/с)</label>
+            <input type="text" id="v" name="v" value="{{ form.v }}" placeholder="неизвестна — пусто">
+        </div>
+        <div class="field">
+            <label for="t">Время t (с)</label>
+            <input type="text" id="t" name="t" value="{{ form.t }}" placeholder="неизвестно — пусто">
+        </div>
+        <div class="field">
+            <label for="h">Высота h (м)</label>
+            <input type="text" id="h" name="h" value="{{ form.h }}" placeholder="неизвестна — пусто">
+        </div>
+    </div>
+    {% endif %}
+
+    <button type="submit" class="btn btn-primary">Рассчитать</button>
+</form>
+
+{% if error %}
+<div class="alert alert-error">⚠️ {{ error }}</div>
+{% endif %}
+
+{% if result %}
+<div class="result-box">
+    <h2>{{ result.title }}</h2>
+    <p class="formula-hint">Использованная формула: <code>{{ result.formula }}</code></p>
+    <table class="result-table">
+        <tbody>
+            {% for label, value, unit in result.rows %}
+            <tr>
+                <td>{{ label }}</td>
+                <td class="value">{{ value }} <span class="unit">{{ unit }}</span></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+{% endblock %}

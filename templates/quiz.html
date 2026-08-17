@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Тест — Физика{% endblock %}
+
+{% block content %}
+<h1 class="page-title">✏️ Тест: Скорость и ускорение</h1>
+
+{% if not submitted %}
+<p class="lead">Ответьте на вопросы. Ответы проверяются автоматически.</p>
+<form method="post" class="quiz-form">
+    {% for item in quiz %}
+    <div class="quiz-question">
+        <label for="q{{ loop.index }}">
+            <span class="q-num">{{ loop.index }}.</span> {{ item.question }}
+        </label>
+        <input type="text" id="q{{ loop.index }}" name="q{{ loop.index }}" placeholder="Ваш ответ" required>
+    </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">Проверить ответы</button>
+</form>
+
+{% else %}
+
+<div class="result-box">
+    <h2>Ваш результат: {{ score }} из {{ total }}</h2>
+    <p class="grade">{{ grade }}</p>
+</div>
+
+{% for a in answers %}
+<div class="quiz-result {% if a.correct %}correct{% else %}wrong{% endif %}">
+    <p class="q-text"><strong>Вопрос {{ loop.index }}:</strong> {{ a.question }}</p>
+    {% if a.correct %}
+        <p class="mark">✓ Правильно</p>
+    {% else %}
+        <p class="mark">✗ Неверно</p>
+        <p class="user-answer">Ваш ответ: <em>{{ a.user_answer or '—' }}</em></p>
+        <p class="correct-answer">Правильный ответ: <strong>{{ a.correct_answer }}</strong></p>
+    {% endif %}
+</div>
+{% endfor %}
+
+<div class="actions">
+    <a href="{{ url_for('quiz_page') }}" class="btn">Пройти ещё раз</a>
+</div>
+
+{% endif %}
+{% endblock %}
